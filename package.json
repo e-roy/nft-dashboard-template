@@ -1,53 +1,55 @@
 {
-    "name": "nft-market-demo",
-    "version": "0.1.0",
-    "private": true,
-    "homepage": "https://covalenthq.github.io/nft-dashboard-template",
-    "dependencies": {
-        "@blueprintjs/core": "^3.52.0",
-        "@testing-library/jest-dom": "^5.12.0",
-        "@testing-library/react": "^11.2.7",
-        "@testing-library/user-event": "^12.8.3",
-        "axios": "^0.24.0",
-        "axios-retry": "^3.2.4",
-        "chart.js": "^3.7.0",
-        "dotenv": "^11.0.0",
-        "gh-pages": "^3.2.3",
-        "moment": "^2.29.1",
-        "node-vibrant": "^3.1.6",
-        "pondjs": "^0.9.0",
-        "react": "^17.0.2",
-        "react-chartjs-2": "^4.0.0",
-        "react-dom": "^17.0.2",
-        "react-intersection-observer": "^8.32.0",
-        "react-lazy-load-image-component": "^1.5.1",
-        "react-router-dom": "^6.2.1",
-        "react-scripts": "^5.0.0",
-        "react-timeseries-charts": "^0.16.1",
-        "web-vitals": "^2.1.4"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "CI=false && react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    }
+  "name": "nft-market-demo",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://e-roy.github.io/nft-dashboard-template",
+  "dependencies": {
+    "@blueprintjs/core": "^3.52.0",
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.24.0",
+    "axios-retry": "^3.2.4",
+    "chart.js": "^3.7.0",
+    "dotenv": "^11.0.0",
+    "gh-pages": "^3.2.3",
+    "moment": "^2.29.1",
+    "node-vibrant": "^3.1.6",
+    "pondjs": "^0.9.0",
+    "react": "^17.0.2",
+    "react-chartjs-2": "^4.0.0",
+    "react-dom": "^17.0.2",
+    "react-intersection-observer": "^8.32.0",
+    "react-lazy-load-image-component": "^1.5.1",
+    "react-router-dom": "^6.2.1",
+    "react-scripts": "^5.0.0",
+    "react-timeseries-charts": "^0.16.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
