@@ -56,6 +56,12 @@ function App() {
             <CollectionView light={light} vibrant={vibrant} dark={dark} />
           }
         />
+        <Route
+          path="/nft-dashboard-template"
+          element={
+            <CollectionView light={light} vibrant={vibrant} dark={dark} />
+          }
+        />
       </Routes>
       <div className="logo">
         <img src={Logo} alt=""></img>
