@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Banner from "../../components/banner";
-import NftDetails from "../../components/nftDetails";
-import Loader from "../../assets/covalent-logo-loop_dark_v2.gif";
+import NftDetails from "@/components/nftDetails";
+import Loader from "@/assets/covalent-logo-loop_dark_v2.gif";
 import axios from "axios";
 import axiosRetry from "axios-retry";
 import "./style.css";
-import { CONFIG } from "../../config";
-import { Icon } from "@blueprintjs/core";
+// import { Icon } from "@blueprintjs/core";
 
 export default function NFTView({ light, dark, vibrant }) {
   let { address, id, chainId } = useParams();
   const [nft, setNft] = useState({});
   const [activeLoader, setLoader] = useState(true);
   // const API_KEY = process.env['REACT_APP_COVALENT_API']
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   axiosRetry(axios, {
     retries: 3,
@@ -43,6 +41,11 @@ export default function NFTView({ light, dark, vibrant }) {
     handleNft();
   }, [address, id, chainId]);
 
+  useEffect(() => {
+    console.log(nft);
+    // console.log(chainId, address, id);
+  }, [nft]);
+
   return (
     <>
       {activeLoader ? (
@@ -51,33 +54,7 @@ export default function NFTView({ light, dark, vibrant }) {
         </div>
       ) : (
         <>
-          <Banner
-            img={
-              CONFIG.TEMPLATE.banner_picture !== ""
-                ? CONFIG.TEMPLATE.banner_picture
-                : null
-            }
-            head={CONFIG.TEMPLATE.title}
-            subhead={"Code Template"}
-            color={vibrant}
-          />
           <div className="main">
-            <div
-              className="back"
-              style={{ color: light ? light : "#FF4C8B" }}
-              onClick={() => {
-                navigate(-1);
-              }}
-            >
-              <Icon
-                icon={"chevron-left"}
-                size={24}
-                intent="primary"
-                color={light ? light : "#FF4C8B"}
-                className="icon"
-              />
-              Back
-            </div>
             <NftDetails data={nft} color={dark} />
           </div>
         </>
