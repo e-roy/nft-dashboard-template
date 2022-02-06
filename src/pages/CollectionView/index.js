@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import SelectDropdown from "../../components/selectDropdown";
-import Banner from "../../components/banner";
-import Loader from "../../assets/covalent-logo-loop_dark_v2.gif";
-import TimeSeries from "../../components/timeseriesChart";
+import SelectDropdown from "@/components/selectDropdown";
+import Loader from "@/assets/covalent-logo-loop_dark_v2.gif";
+import TimeSeries from "@/components/timeseriesChart";
 import axios from "axios";
 import "./style.css";
-import { CONFIG } from "../../config";
+import { CONFIG } from "@/config";
 import moment from "moment";
 import axiosRetry from "axios-retry";
 import { Icon } from "@blueprintjs/core";
@@ -146,52 +145,7 @@ export default function CollectionView({ light, vibrant, dark }) {
 
   return (
     <>
-      <Banner
-        img={
-          CONFIG.TEMPLATE.banner_picture !== ""
-            ? CONFIG.TEMPLATE.banner_picture
-            : null
-        }
-        head={CONFIG.TEMPLATE.title}
-        subhead={"Code Template"}
-        color={vibrant}
-      />
       <div className="main">
-        {!address ? (
-          <div
-            className="global"
-            style={{ color: light ? light : "#FF4C8B" }}
-            onClick={() => {
-              navigate("/global");
-            }}
-          >
-            Global View
-            <Icon
-              icon={"chevron-right"}
-              size={24}
-              intent="primary"
-              color={light ? light : "#FF4C8B"}
-              className="icon"
-            />
-          </div>
-        ) : (
-          <div
-            className="back"
-            style={{ color: light ? light : "#FF4C8B" }}
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            <Icon
-              icon={"chevron-left"}
-              size={24}
-              intent="primary"
-              color={light ? light : "#FF4C8B"}
-              className="icon"
-            />
-            Back
-          </div>
-        )}
         <div className="content">
           <div className="info">
             <div className="image">
@@ -212,7 +166,9 @@ export default function CollectionView({ light, vibrant, dark }) {
             <div className="details">
               <div className="title-cont">
                 <h1 style={{ color: light }}>Collection Address </h1>
-                <h3
+
+                <div
+                  className="flex cursor-pointer"
                   onClick={() => {
                     if (blockchain_id === 1) {
                       window.open(
@@ -232,7 +188,7 @@ export default function CollectionView({ light, vibrant, dark }) {
                     }
                   }}
                 >
-                  {address_id}{" "}
+                  <div>{address_id} </div>
                   <Icon
                     icon={"share"}
                     size={15}
@@ -240,7 +196,8 @@ export default function CollectionView({ light, vibrant, dark }) {
                     color={light ? light : "#FF4C8B"}
                     className="share"
                   />
-                </h3>
+                </div>
+
                 <table className="collection-table">
                   <tbody>
                     <tr className="title-row" style={{ color: light }}>
@@ -311,8 +268,12 @@ export default function CollectionView({ light, vibrant, dark }) {
             <div className="collection-display">
               {nft &&
                 nft.map((o, i) => {
+                  // console.log(o);
                   return (
-                    <div className="nft" key={i}>
+                    <div
+                      className="nft transform hover:scale-105 transition duration-500"
+                      key={i}
+                    >
                       <img
                         onError={(event) => {
                           event.target.classList.add("error-image");

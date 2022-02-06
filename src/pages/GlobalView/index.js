@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import SelectDropdown from "../../components/selectDropdown";
-import Table from "../../components/table";
-import Banner from "../../components/banner";
+import SelectDropdown from "@/components/selectDropdown";
+import Table from "@/components/table";
 import { useNavigate } from "react-router-dom";
-import { CONFIG } from "../../config";
-import Loader from "../../assets/covalent-logo-loop_dark_v2.gif";
-import { Icon } from "@blueprintjs/core";
+import { CONFIG } from "@/config";
+import Loader from "@/assets/covalent-logo-loop_dark_v2.gif";
 import axios from "axios";
 import axiosRetry from "axios-retry";
 import "./style.css";
@@ -47,33 +45,7 @@ export default function LandingPage({ light, dark, vibrant }) {
 
   return (
     <>
-      <Banner
-        img={
-          CONFIG.TEMPLATE.banner_picture !== ""
-            ? CONFIG.TEMPLATE.banner_picture
-            : null
-        }
-        head={CONFIG.TEMPLATE.title}
-        subhead={"Code Template"}
-        color={vibrant}
-      />
       <div className="main">
-        <div
-          className="back"
-          style={{ color: light ? light : "#FF4C8B" }}
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          <Icon
-            icon={"chevron-left"}
-            size={24}
-            intent="primary"
-            color={light ? light : "#FF4C8B"}
-            className="icon"
-          />
-          Back
-        </div>
         <div className="content">
           <div className="select-chain">
             <SelectDropdown
