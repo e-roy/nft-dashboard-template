@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import { Container, ContractAddress } from "@/components/elements";
+
 const Coins = ({ walletAssets }) => {
   //   console.log("walletAssets", walletAssets);
   const [assets, setAssets] = useState([]);
@@ -20,11 +22,13 @@ const Coins = ({ walletAssets }) => {
         )
           return null;
         return (
-          <div
-            key={index}
-            className="border border-gray-400 rounded shadow-md mx-4 my-2 md:mx-8 p-2 font-semibold text-gray-200 tracking-widest"
-          >
-            {asset.label}
+          <Container key={index}>
+            <div>
+              <span className="font-semibold">{asset.label}</span>
+              <span className="px-4 font-regular text-sm text-gray-300">
+                CHAIN ID - {asset.chain_id}
+              </span>
+            </div>
             {asset.items &&
               asset.items.map((item, index) => {
                 let balance = ethers.utils.formatUnits(
@@ -54,14 +58,19 @@ const Coins = ({ walletAssets }) => {
                           ) / 10000}
                         </span>
                         <span className="pt-2 pl-4">
-                          {item.contract_address}
+                          <ContractAddress
+                            address={item.contract_address}
+                            chainId={asset.chain_id}
+                            light={""}
+                            shorten
+                          />
                         </span>
                       </div>
                     )}
                   </div>
                 );
               })}
-          </div>
+          </Container>
         );
       })}
     </div>

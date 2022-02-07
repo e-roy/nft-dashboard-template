@@ -6,7 +6,6 @@ import "./style.css";
 import Logo from "@/assets/white-logo.png";
 import bannerImg from "@/assets/Covalent-Background_5.jpg";
 import { Icon } from "@blueprintjs/core";
-import { CONFIG } from "@/config";
 
 const Banner = ({ light, dark, vibrant }) => {
   const { authenticate, isAuthenticated, user, logout, account } = useMoralis();
@@ -15,10 +14,7 @@ const Banner = ({ light, dark, vibrant }) => {
   const [head, setHead] = useState("Covalent Dashboard");
   const [subhead, setSubhead] = useState("Code Template");
   const [displayAddress, setDisplayAddress] = useState("");
-  // console.log(CONFIG);
-  // console.log(img);
-  // const head = "PolygonPunks Dashboard";
-  // const subhead = "Code Template";
+
   const img = "";
 
   useEffect(() => {
@@ -56,7 +52,7 @@ const Banner = ({ light, dark, vibrant }) => {
           <div className="md:mt-16 lg:mt-8 overflow-hidden">
             {address ? (
               <div
-                className="cursor-pointer"
+                className="cursor-pointer hover:opacity-90"
                 onClick={() => {
                   navigate("/profile");
                 }}
