@@ -1,38 +1,46 @@
 export const networkConfigs = {
   "0x1": {
     chainId: 1,
+    chainHex: "0x1",
     currencySymbol: "ETH",
     blockExplorerUrl: "https://etherscan.io/",
     wrapped: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
   },
   "0x3": {
     chainId: 3,
+    chainHex: "0x3",
     currencySymbol: "ETH",
     blockExplorerUrl: "https://ropsten.etherscan.io/",
   },
   "0x4": {
     chainId: 4,
+    chainHex: "0x4",
     currencySymbol: "ETH",
     blockExplorerUrl: "https://kovan.etherscan.io/",
   },
   "0x2a": {
     chainId: 42,
+    chainHex: "0x2a",
     currencySymbol: "ETH",
     blockExplorerUrl: "https://rinkeby.etherscan.io/",
   },
   "0x5": {
     chainId: 5,
+    chainHex: "0x5",
     currencySymbol: "ETH",
     blockExplorerUrl: "https://goerli.etherscan.io/",
   },
   "0x539": {
     chainName: "Local Chain",
+    chainId: 539,
+    chainHex: "0x539",
     currencyName: "ETH",
     currencySymbol: "ETH",
     rpcUrl: "http://127.0.0.1:7545",
   },
   "0xa86a": {
     chainId: 43114,
+    chainHex: "0xa86a",
     chainName: "Avalanche Mainnet",
     currencyName: "AVAX",
     currencySymbol: "AVAX",
@@ -41,6 +49,7 @@ export const networkConfigs = {
   },
   "0x38": {
     chainId: 56,
+    chainHex: "0x38",
     chainName: "Smart Chain",
     currencyName: "BNB",
     currencySymbol: "BNB",
@@ -50,6 +59,7 @@ export const networkConfigs = {
   },
   "0x61": {
     chainId: 97,
+    chainHex: "0x61",
     chainName: "Smart Chain - Testnet",
     currencyName: "BNB",
     currencySymbol: "BNB",
@@ -58,6 +68,7 @@ export const networkConfigs = {
   },
   "0x89": {
     chainId: 137,
+    chainHex: "0x89",
     chainName: "Polygon Mainnet",
     currencyName: "MATIC",
     currencySymbol: "MATIC",
@@ -67,6 +78,7 @@ export const networkConfigs = {
   },
   "0x13881": {
     chainId: 80001,
+    chainHex: "0x13881",
     chainName: "Mumbai",
     currencyName: "MATIC",
     currencySymbol: "MATIC",
@@ -88,6 +100,7 @@ export const getWrappedNative = (chain) =>
 export const covalentNetworks = [
   {
     name: "eth-mainnet",
+    chainHex: "0x1",
     chain_id: "1",
     is_testnet: false,
     db_schema_name: "chain_eth_mainnet",
@@ -97,6 +110,7 @@ export const covalentNetworks = [
   },
   {
     name: "eth-kovan",
+    chainHex: "0x2a",
     chain_id: "42",
     is_testnet: true,
     db_schema_name: "chain_eth_kovan",
@@ -106,6 +120,7 @@ export const covalentNetworks = [
   },
   {
     name: "matic-mainnet",
+    chainHex: "0x89",
     chain_id: "137",
     is_testnet: false,
     db_schema_name: "chain_matic_mainnet",
@@ -115,6 +130,7 @@ export const covalentNetworks = [
   },
   {
     name: "matic-mumbai",
+    chainHex: "0x13881",
     chain_id: "80001",
     is_testnet: true,
     db_schema_name: "chain_matic_mumbai",
@@ -124,6 +140,7 @@ export const covalentNetworks = [
   },
   {
     name: "avalanche-mainnet",
+    chainHex: "0xa86a",
     chain_id: "43114",
     is_testnet: false,
     db_schema_name: "chain_avalanche_mainnet",
@@ -142,6 +159,7 @@ export const covalentNetworks = [
   },
   {
     name: "bsc-mainnet",
+    chainHex: "0x38",
     chain_id: "56",
     is_testnet: false,
     db_schema_name: "chain_bsc_mainnet",
@@ -151,6 +169,7 @@ export const covalentNetworks = [
   },
   {
     name: "bsc-testnet",
+    chainHex: "0x61",
     chain_id: "97",
     is_testnet: true,
     db_schema_name: "chain_bsc_testnet",

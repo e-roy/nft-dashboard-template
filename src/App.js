@@ -108,7 +108,7 @@ const AppLayout = () => {
         <header className="mb-8 md:mb-20">
           <Banner light={light} vibrant={vibrant} dark={dark} />
         </header>
-        <main className="">
+        <main className="mb-16">
           <Outlet />
         </main>
       </div>

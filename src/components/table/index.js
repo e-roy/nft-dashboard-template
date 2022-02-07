@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./style.css";
 import { Icon } from "@blueprintjs/core";
-import { CONFIG } from "../../config";
+import { CONFIG } from "@/config";
 
 const Table = ({ data, onClick, color }) => {
   const [sortConfig, setConfig] = useState({ key: "", direction: "" });
@@ -70,7 +70,7 @@ const Table = ({ data, onClick, color }) => {
         size={16}
         intent="primary"
         color="#FF4C8B"
-        className="icon"
+        className="icon cursor-pointer"
         onClick={() => {
           requestSort(sortKey);
         }}

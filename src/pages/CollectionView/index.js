@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Container, ContractAddress } from "@/components/elements";
 import SelectDropdown from "@/components/selectDropdown";
 import Loader from "@/assets/covalent-logo-loop_dark_v2.gif";
 import TimeSeries from "@/components/timeseriesChart";
@@ -8,7 +9,6 @@ import "./style.css";
 import { CONFIG } from "@/config";
 import moment from "moment";
 import axiosRetry from "axios-retry";
-import { Icon } from "@blueprintjs/core";
 
 export default function CollectionView({ light, vibrant, dark }) {
   const [nft, setNft] = useState([]);
@@ -17,6 +17,8 @@ export default function CollectionView({ light, vibrant, dark }) {
   const [activeLoader, setLoader] = useState(true);
   const [graphLoader, setGraphLoader] = useState(true);
   const [collectionData, setData] = useState([]);
+  // const [transactionData, setTransactionData] = useState([]);
+  const [collectionTotal, setCollectionTotal] = useState(0);
   const [graphErr, setErr] = useState(false);
   const [filter, setFilter] = useState(7);
   const navigate = useNavigate();
@@ -47,6 +49,7 @@ export default function CollectionView({ light, vibrant, dark }) {
   useEffect(() => {
     handleCollection();
     handleNft();
+    // handleTransactions();
   }, []);
 
   // Handle Graph data
@@ -123,6 +126,7 @@ export default function CollectionView({ light, vibrant, dark }) {
       resp = await axios.get(
         `https://api.covalenthq.com/v1/${blockchain_id}/tokens/${address_id}/nft_token_ids/?quote-currency=USD&format=JSON&page-size=5&key=ckey_docs`
       );
+      setCollectionTotal(resp.data.data.pagination.total_count);
 
       // Request for nft metadata for display pictures
       for (let i of resp.data.data.items) {
@@ -143,11 +147,24 @@ export default function CollectionView({ light, vibrant, dark }) {
     } catch (err) {}
   };
 
+  // request for collection transactions
+  // const handleTransactions = async () => {
+  //   try {
+  //     const resp = await axios.get(
+  //       `https://api.covalenthq.com/v1/${blockchain_id}/address/${address_id}/transactions_v2/?quote-currency=USD&format=JSON&block-signed-at-asc=false&no-logs=false&key=ckey_docs&page-size=1000`
+  //     );
+  //     setTransactionData([...resp.data.data.items]);
+  //   } catch (error) {}
+  // };
+
+  // console.log(collectionData);
+  // console.log(nft);
+  // console.log(transactionData);
   return (
     <>
       <div className="main">
-        <div className="content">
-          <div className="info">
+        <Container>
+          <div className="flex">
             <div className="image">
               {activeLoader ? (
                 <img src={Loader} alt=""></img>
@@ -166,38 +183,11 @@ export default function CollectionView({ light, vibrant, dark }) {
             <div className="details">
               <div className="title-cont">
                 <h1 style={{ color: light }}>Collection Address </h1>
-
-                <div
-                  className="flex cursor-pointer"
-                  onClick={() => {
-                    if (blockchain_id === 1) {
-                      window.open(
-                        `https://etherscan.io/address/${address_id}`,
-                        "_blank"
-                      );
-                    } else if (blockchain_id === 137) {
-                      window.open(
-                        `https://polygonscan.com/address/${address_id}`,
-                        "_blank"
-                      );
-                    } else {
-                      window.open(
-                        `https://snowtrace.io/address/${address_id}`,
-                        "_blank"
-                      );
-                    }
-                  }}
-                >
-                  <div>{address_id} </div>
-                  <Icon
-                    icon={"share"}
-                    size={15}
-                    intent="primary"
-                    color={light ? light : "#FF4C8B"}
-                    className="share"
-                  />
-                </div>
-
+                <ContractAddress
+                  address={address_id}
+                  chainId={blockchain_id}
+                  light={light}
+                />
                 <table className="collection-table">
                   <tbody>
                     <tr className="title-row" style={{ color: light }}>
@@ -212,7 +202,6 @@ export default function CollectionView({ light, vibrant, dark }) {
                           : 0}
                       </td>
                       <td>
-                        {" "}
                         {collectionData[0]?.volume_quote_day
                           ? formatter
                               .format(collectionData[0]?.volume_quote_day)
@@ -225,75 +214,88 @@ export default function CollectionView({ light, vibrant, dark }) {
                           : 0}
                       </td>
                     </tr>
+                    <tr className="title-row" style={{ color: light }}>
+                      <td>Collection Total</td>
+                    </tr>
+                    <tr className="data-row">
+                      <td>{collectionTotal ? collectionTotal : 0}</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-        </div>
+        </Container>
         {CONFIG.TEMPLATE.timeseries_chart && (
-          <div className="graph-cont">
-            {graphLoader && (
-              <div className="graph-loader">
+          <Container>
+            <div className="graph-cont">
+              {graphLoader && (
+                <div className="graph-loader">
+                  <img src={Loader} alt=""></img>
+                </div>
+              )}
+              {graphErr && (
+                <div className="graph-err">
+                  No data available between these dates
+                </div>
+              )}
+              <div className="graph-header">
+                <div className="text-xl">Floor Price</div>
+                <SelectDropdown
+                  options={CONFIG.GRAPH_OPTIONS}
+                  value={filter}
+                  onChange={(e) => {
+                    handleGraph(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="graph">
+                <TimeSeries quote={graphData} wei={weiData} />
+              </div>
+            </div>
+          </Container>
+        )}
+
+        <div className="">
+          {activeLoader ? (
+            <Container>
+              <div className="collection-load">
                 <img src={Loader} alt=""></img>
               </div>
-            )}
-            {graphErr && (
-              <div className="graph-err">
-                No data available between these dates
-              </div>
-            )}
-            <div className="graph-header">
-              <h2>Floor Price </h2>
-              <SelectDropdown
-                options={CONFIG.GRAPH_OPTIONS}
-                value={filter}
-                onChange={(e) => {
-                  handleGraph(e.target.value);
-                }}
-              />
-            </div>
-            <div className="graph">
-              <TimeSeries quote={graphData} wei={weiData} />
-            </div>
-          </div>
-        )}
-        <div className="bottom-section">
-          <h1>NFT Preview (First 5)</h1>
-          {activeLoader ? (
-            <div className="collection-load">
-              <img src={Loader} alt=""></img>
-            </div>
+            </Container>
           ) : (
-            <div className="collection-display">
-              {nft &&
-                nft.map((o, i) => {
-                  // console.log(o);
-                  return (
-                    <div
-                      className="nft transform hover:scale-105 transition duration-500"
-                      key={i}
-                    >
-                      <img
-                        onError={(event) => {
-                          event.target.classList.add("error-image");
-                          event.target.classList.remove("collection-img");
-                        }}
-                        className="collection-img"
+            <Container>
+              <div className="text-xl">NFT Preview (First 5)</div>
+              <div className="collection-display">
+                {nft &&
+                  nft.map((o, i) => {
+                    // console.log(o);
+                    return (
+                      <div
+                        className="nft transform hover:scale-105 transition duration-500"
                         key={i}
-                        src={o?.external_data?.image}
-                        alt=""
-                        onClick={() => {
-                          navigate(
-                            `/nft/${address_id}/${o.token_id}/${blockchain_id}`
-                          );
-                        }}
-                      ></img>
-                      {o?.external_data?.name}
-                    </div>
-                  );
-                })}
-            </div>
+                      >
+                        <img
+                          onError={(event) => {
+                            event.target.classList.add("error-image");
+                            event.target.classList.remove("collection-img");
+                          }}
+                          className="collection-img"
+                          key={i}
+                          src={o?.external_data?.image}
+                          alt=""
+                          onClick={() => {
+                            navigate(
+                              `/nft/${address_id}/${o.token_id}/${blockchain_id}`
+                            );
+                          }}
+                        ></img>
+                        {o?.external_data?.name}
+                      </div>
+                    );
+                  })}
+              </div>
+            </Container>
           )}
         </div>
       </div>

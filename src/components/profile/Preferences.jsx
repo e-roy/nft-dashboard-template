@@ -1,9 +1,10 @@
+import { Container } from "@/components/elements";
 const Preferences = () => {
   return (
-    <div>
+    <Container>
       Preferences
       <div>here</div>
-    </div>
+    </Container>
   );
 };
 

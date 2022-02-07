@@ -1,25 +1,29 @@
-// import Alert from '../../assets/alert.svg'
-import "./style.css";
+import { ContractAddress } from "@/components/elements";
 
-const NftDetails = ({ data, color }) => {
+const NftDetails = ({ data, color, contract, chainId }) => {
   return (
-    <div className="nft-cont">
-      <div className="img-container">
+    <div className="md:flex">
+      <div className="flex-2">
         <img
           onError={(event) => {
             event.target.classList.add("error-image");
             event.target.classList.remove("nft-img");
           }}
-          className="nft-img"
+          className="m-auto max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
           src={data?.external_data?.image}
           alt=""
         ></img>
       </div>
-      <div className="nft-details" style={{ backgroundColor: color }}>
-        <h1>{data?.external_data?.name}</h1>
-        <h2>Token ID : {data?.token_id}</h2>
+
+      <div
+        className="py-2 px-4 text-gray-100"
+        style={{ backgroundColor: color }}
+      >
+        <h1 className="font-bold text-xl">{data?.external_data?.name}</h1>
+        <h2 className="font-bold text-lg">Token ID : {data?.token_id}</h2>
+        <ContractAddress address={contract} chainId={chainId} light={""} />
         <p>{data?.external_data?.description}</p>
-        <table className="nft-table">
+        <table className="font-semibold">
           <tbody>
             {data?.external_data?.attributes ? (
               <>

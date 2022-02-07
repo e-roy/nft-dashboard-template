@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Container } from "@/components/elements";
 import SelectDropdown from "@/components/selectDropdown";
 import Table from "@/components/table";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +7,6 @@ import { CONFIG } from "@/config";
 import Loader from "@/assets/covalent-logo-loop_dark_v2.gif";
 import axios from "axios";
 import axiosRetry from "axios-retry";
-import "./style.css";
 
 export default function LandingPage({ light, dark, vibrant }) {
   const navigate = useNavigate();
@@ -45,9 +45,9 @@ export default function LandingPage({ light, dark, vibrant }) {
 
   return (
     <>
-      <div className="main">
+      <Container>
         <div className="content">
-          <div className="select-chain">
+          <div className="">
             <SelectDropdown
               options={CONFIG.FILTER_OPTIONS}
               value={chain}
@@ -63,18 +63,19 @@ export default function LandingPage({ light, dark, vibrant }) {
           ) : (
             <Table
               onClick={(id) => {
-                if (id !== CONFIG.TEMPLATE.collection_address) {
-                  navigate(`/collection/${id}/${chain}`);
-                } else {
-                  navigate(-1);
-                }
+                navigate(`/collection/${id}/${chain}`);
+                // if (id !== CONFIG.TEMPLATE.collection_address) {
+                //   navigate(`/collection/${id}/${chain}`);
+                // } else {
+                //   navigate(-1);
+                // }
               }}
               data={market}
               color={vibrant}
             />
           )}
         </div>
-      </div>
+      </Container>
     </>
   );
 }

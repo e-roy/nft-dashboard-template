@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { NativeBalance, NFTBalance } from "@/components/elements";
-import { Preferences, Coins } from "@/components/profile";
-import { CONFIG } from "@/config";
-import Loader from "@/assets/covalent-logo-loop_dark_v2.gif";
+import { Preferences, Coins, NFTBalance } from "@/components/profile";
 import axios from "axios";
 import axiosRetry from "axios-retry";
 import { covalentNetworks } from "@/helpers/networks";
@@ -14,8 +11,7 @@ const ProfileView = ({ light, dark, vibrant }) => {
   const { account } = useMoralis();
   const [active, setActive] = useState(0);
   // console.log(account);
-
-  // const [chain, setChain] = useState(CONFIG.TEMPLATE.block_chain_id);
+  // console.log(covalentNetworks);
 
   const [market, setMarket] = useState([]);
   const [activeLoader, setLoader] = useState(true);
@@ -35,20 +31,14 @@ const ProfileView = ({ light, dark, vibrant }) => {
   });
 
   useEffect(() => {
-    // console.log(covalentNetworks);
     if (account) {
       covalentNetworks.forEach((chain) => {
         const getAssets = async () => {
-          // console.log(chain.chain_id);
-
           const result = await handleUserData(chain.chain_id, account);
-          // console.log(chain.chain_id, chain.label, result);
           let networkAssets = walletAssets.find(
             (asset) => asset.chain_id === chain.chain_id
           );
-          // console.log(networkAssets);
           networkAssets.items = result;
-          // console.log("adjusted result", networkAssets);
           setWalletAssets([...walletAssets, networkAssets]);
         };
         getAssets();
@@ -75,7 +65,7 @@ const ProfileView = ({ light, dark, vibrant }) => {
         {profileNavaigation.map((item, index) => {
           return (
             <button
-              className="flex-1 text-center hover:bg-black"
+              className="flex-1 text-center rounded hover:bg-gray-700 hover:bg-opacity-30"
               style={{
                 color: vibrant,
                 border: `1px solid ${vibrant}`,
@@ -95,7 +85,6 @@ const ProfileView = ({ light, dark, vibrant }) => {
       {active === 0 && <NFTBalance walletAssets={walletAssets} />}
       {active === 1 && (
         <div>
-          {/* <NativeBalance /> */}
           <Coins walletAssets={walletAssets} />
         </div>
       )}
